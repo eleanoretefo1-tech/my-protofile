@@ -5,10 +5,9 @@ import AnimatedBackground from './components/AnimatedBackground';
 import GradientText from './components/GradientText';
 import NeonButton from './components/NeonButton';
 import ProfileImage from './components/ProfileImage';
-import LoadingScreen from './components/LoadingScreen';
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleContactEmail = () => {
     window.location.href = 'mailto:eleanoretefo1@gmail.com';
@@ -22,9 +21,7 @@ function App() {
     setIsLoading(false);
   };
 
-  if (isLoading) {
-    return <LoadingScreen onLoadingComplete={handleLoadingComplete} />;
-  }
+  // Loading screen disabled to improve LCP
 
   return (
     <div className="min-h-screen bg-gray-900 relative overflow-hidden">

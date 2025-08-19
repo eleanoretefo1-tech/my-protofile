@@ -16,7 +16,10 @@ const ProfileImage: React.FC = () => {
       {/* Profile image container */}
       <div className="relative w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden border-2 border-gray-700 group-hover:scale-105 transition-all duration-500 bg-white">
         <img
-          src="/public/photo_2025-08-19_02-14-04.jpg"
+          src="/photo_2025-08-19_02-14-04.jpg"
+          width="256"
+          height="256"
+          fetchpriority="high"
           alt="Mohamed Atef Abdelsattar"
           className="w-full h-full object-cover rounded-full"
           onError={(e) => {

@@ -20,13 +20,22 @@ const AnimatedBackground: React.FC = () => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     };
 
     const createNodes = () => {
-      const nodeCount = Math.min(80, Math.floor((canvas.width * canvas.height) / 10000));
+      if (prefersReducedMotion) {
+        nodesRef.current = [];
+        return;
+      }
+
+      const baseCount = Math.min(80, Math.floor((canvas.width * canvas.height) / 15000));
+      const maxForSmallScreens = window.innerWidth < 768 ? 30 : 80;
+      const nodeCount = Math.min(maxForSmallScreens, baseCount);
       nodesRef.current = [];
 
       for (let i = 0; i < nodeCount; i++) {
@@ -108,16 +117,20 @@ const AnimatedBackground: React.FC = () => {
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
-      updateNodes();
-      drawConnections();
-      drawNodes();
+      if (!prefersReducedMotion) {
+        updateNodes();
+        drawConnections();
+        drawNodes();
+      }
 
       animationRef.current = requestAnimationFrame(animate);
     };
 
     resizeCanvas();
     createNodes();
-    animate();
+    if (!prefersReducedMotion) {
+      animate();
+    }
 
     const handleResize = () => {
       resizeCanvas();
@@ -138,6 +151,8 @@ const AnimatedBackground: React.FC = () => {
     <canvas
       ref={canvasRef}
       className="fixed inset-0 w-full h-full pointer-events-none"
+      aria-hidden="true"
+      role="presentation"
       style={{ zIndex: 1 }}
     />
   );
