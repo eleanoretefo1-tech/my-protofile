@@ -43,9 +43,9 @@ const AnimatedBackground: React.FC = () => {
         nodesRef.current.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
-          // Slower movement for smoother feel
-          vx: (Math.random() - 0.5) * 1.0,
-          vy: (Math.random() - 0.5) * 1.0,
+          // Faster movement as requested
+          vx: (Math.random() - 0.5) * 5.0,
+          vy: (Math.random() - 0.5) * 5.0,
           connections: []
         });
       }
