@@ -33,9 +33,9 @@ const AnimatedBackground: React.FC = () => {
         return;
       }
 
-      // Increase density: more nodes
-      const baseCount = Math.min(200, Math.floor((canvas.width * canvas.height) / 9000));
-      const maxForSmallScreens = window.innerWidth < 768 ? 80 : 200;
+      // Denser effect: more nodes
+      const baseCount = Math.min(260, Math.floor((canvas.width * canvas.height) / 7000));
+      const maxForSmallScreens = window.innerWidth < 768 ? 120 : 260;
       const nodeCount = Math.min(maxForSmallScreens, baseCount);
       nodesRef.current = [];
 
@@ -43,9 +43,9 @@ const AnimatedBackground: React.FC = () => {
         nodesRef.current.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
-          // Increase speed
-          vx: (Math.random() - 0.5) * 3.2,
-          vy: (Math.random() - 0.5) * 3.2,
+          // Slower movement for smoother feel
+          vx: (Math.random() - 0.5) * 1.0,
+          vy: (Math.random() - 0.5) * 1.0,
           connections: []
         });
       }
@@ -65,7 +65,8 @@ const AnimatedBackground: React.FC = () => {
     };
 
     const drawConnections = () => {
-      const maxDistance = 220;
+      // More connections for a denser mesh
+      const maxDistance = 260;
       
       for (let i = 0; i < nodesRef.current.length; i++) {
         for (let j = i + 1; j < nodesRef.current.length; j++) {

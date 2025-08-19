@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { Mail, MessageCircle } from 'lucide-react';
+import { Mail, MessageCircle, MessageCircleMore, PhoneCall, MessageSquare } from 'lucide-react';
 import AnimatedBackground from './components/AnimatedBackground';
 import GradientText from './components/GradientText';
 import NeonButton from './components/NeonButton';
