@@ -17,9 +17,7 @@ function App() {
     window.open('https://wa.me/201227866673', '_blank');
   };
 
-  const handleLoadingComplete = () => {
-    setIsLoading(false);
-  };
+  // Loading screen removed; keep stub if needed later
 
   // Loading screen disabled to improve LCP
 
