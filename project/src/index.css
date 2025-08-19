@@ -21,6 +21,11 @@
   .animate-spin-reverse {
     animation: spin-reverse 3s linear infinite;
   }
+
+  /* Ultra slow spin for subtle ring */
+  .animate-spin-very-slow {
+    animation: spin 30s linear infinite;
+  }
   
   .animate-float {
     animation: float 3s ease-in-out infinite;
