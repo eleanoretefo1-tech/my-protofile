@@ -4,7 +4,7 @@ const ProfileImage: React.FC = () => {
   return (
     <div className="relative">
       {/* Outer breathing glow around the glass frame */}
-      <div className="absolute -inset-3 rounded-3xl blur-2xl opacity-80 animate-breathe-fast bg-gradient-to-tr from-green-400/60 via-blue-500/50 to-pink-500/60" aria-hidden="true" />
+      <div className="absolute -inset-3 rounded-3xl blur-3xl opacity-90 animate-breathe-fast bg-gradient-to-tr from-green-400/70 via-blue-500/60 to-pink-500/70" aria-hidden="true" />
       {/* Glass backdrop that moves with the frame */}
       <div className="absolute -inset-6 rounded-3xl bg-white/5 backdrop-blur-sm border border-white/10 animate-pulse-glow-strong motion-safe:animate-float-faster" aria-hidden="true" />
       {/* Gradient frame with animated sweep-like glow and snake ring */}
