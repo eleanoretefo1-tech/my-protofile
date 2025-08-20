@@ -49,6 +49,14 @@
     animation: caret-blink 1s steps(1, end) infinite;
   }
 
+  /* Button animated glows */
+  .animate-sweep {
+    animation: sweep 4s linear infinite;
+  }
+  .animate-breathe {
+    animation: breathe 3s ease-in-out infinite;
+  }
+
   .animate-float-soft {
     animation: float-soft 6s ease-in-out infinite;
   }
@@ -132,6 +140,18 @@
 @keyframes spin-snake {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+@keyframes sweep {
+  0% { transform: translateX(-150%); opacity: 0; }
+  30% { opacity: 1; }
+  70% { opacity: 1; }
+  100% { transform: translateX(150%); opacity: 0; }
+}
+
+@keyframes breathe {
+  0%, 100% { opacity: 0.35; filter: blur(18px); }
+  50% { opacity: 0.75; filter: blur(26px); }
 }
 
 /* Custom scrollbar */
