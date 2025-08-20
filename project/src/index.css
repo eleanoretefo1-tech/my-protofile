@@ -34,6 +34,10 @@
   .animate-glow {
     animation: glow 2s ease-in-out infinite alternate;
   }
+
+  .animate-float-soft {
+    animation: float-soft 6s ease-in-out infinite;
+  }
 }
 
 @keyframes gradient-x {
@@ -60,6 +64,21 @@
   }
   50% {
     transform: translateY(-20px);
+  }
+}
+
+@keyframes float-soft {
+  0%, 100% {
+    transform: translate(0px, 0px);
+  }
+  25% {
+    transform: translate(3px, -2px);
+  }
+  50% {
+    transform: translate(0px, 3px);
+  }
+  75% {
+    transform: translate(-3px, 1px);
   }
 }
 
@@ -104,4 +123,11 @@ html {
 ::-moz-selection {
   background: rgba(16, 185, 129, 0.3);
   color: #ffffff;
+}
+
+/* Subtle lighting overlay for profile image */
+.soft-light-overlay {
+  background:
+    radial-gradient(60% 60% at 25% 25%, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.0) 60%),
+    linear-gradient(130deg, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.0) 40%);
 }
