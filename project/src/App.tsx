@@ -18,10 +18,6 @@ function App() {
     window.open('https://wa.me/201227866673', '_blank');
   };
 
-  // Loading screen removed; keep stub if needed later
-
-  // Loading screen disabled to improve LCP
-
   return (
     <div className="min-h-screen bg-gray-900 relative overflow-hidden">
       {/* Animated Background */}
@@ -29,9 +25,9 @@ function App() {
       
       {/* Main Content: two-column responsive layout */}
       <div className="relative z-10 min-h-screen px-6 py-12 pt-28 md:pt-32">
-        <div className="mx-auto max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left: Text and CTAs */}
-          <div className="order-2 lg:order-1 text-center lg:text-left space-y-8">
+          <div className="order-2 lg:order-1 text-left space-y-8">
             <div className="space-y-4">
               <GradientText className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight">
                 <h1>Mohamed Atef</h1>
@@ -46,7 +42,7 @@ function App() {
                 speedMs={20}
               />
             </GradientText>
-            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center lg:justify-start items-center pt-2">
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-start items-center pt-2">
               <NeonButton icon={Mail} onClick={handleContactEmail} variant="primary">
                 Contact Me
               </NeonButton>
