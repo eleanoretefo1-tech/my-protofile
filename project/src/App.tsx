@@ -5,6 +5,7 @@ import AnimatedBackground from './components/AnimatedBackground';
 import GradientText from './components/GradientText';
 import NeonButton from './components/NeonButton';
 import ProfileImage from './components/ProfileImage';
+import TypingText from './components/TypingText';
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
@@ -39,9 +40,11 @@ function App() {
                 <h2>Abdelsattar</h2>
               </GradientText>
             </div>
-            <p className="text-gray-300 text-lg md:text-xl lg:text-2xl font-light leading-relaxed max-w-xl lg:max-w-2xl mx-auto lg:mx-0">
-              Creative Professional & Digital Innovator
-            </p>
+            <TypingText
+              text="FULL STACK DEVELOPER & WEB SOLUTIONS EXPERT"
+              speedMs={30}
+              className="text-lg md:text-2xl lg:text-3xl"
+            />
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center lg:justify-start items-center pt-2">
               <NeonButton icon={Mail} onClick={handleContactEmail} variant="primary">
                 Contact Me
@@ -50,10 +53,7 @@ function App() {
                 WhatsApp
               </NeonButton>
             </div>
-            <div className="space-y-1 text-gray-400 text-sm md:text-base">
-              <p className="hover:text-green-400 transition-colors duration-300">📧 eleanoretefo1@gmail.com</p>
-              <p className="hover:text-blue-400 transition-colors duration-300">📱 +20 122 786 6673</p>
-            </div>
+            {/* Contact info removed as requested */}
           </div>
 
           {/* Right: Profile image */}
