@@ -52,6 +52,9 @@
   .animate-float-soft {
     animation: float-soft 6s ease-in-out infinite;
   }
+  .animate-float-fast {
+    animation: float-soft 3s ease-in-out infinite;
+  }
 }
 
 @keyframes gradient-x {

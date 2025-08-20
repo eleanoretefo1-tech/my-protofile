@@ -12,7 +12,7 @@ const ProfileImage: React.FC = () => {
             height="384"
             fetchpriority="high"
             alt="Mohamed Atef Abdelsattar"
-            className="absolute inset-0 w-full h-full object-cover select-none border-none shadow-none ring-0 outline-none motion-safe:animate-float-soft"
+            className="absolute inset-0 w-full h-full object-cover select-none border-none shadow-none ring-0 outline-none motion-safe:animate-float-fast"
             style={{ border: 'none', boxShadow: 'none', outline: 'none' }}
             onError={(e) => {
               const target = e.target as HTMLImageElement;
