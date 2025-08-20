@@ -35,7 +35,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onLoadingComplete }) => {
   return (
     <div className="fixed inset-0 bg-gray-900 flex items-center justify-center z-50">
       {/* Animated Background Particles */}
-      <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute inset-0 overflow-hidden grid-overlay">
         {[...Array(20)].map((_, i) => (
           <div
             key={i}
@@ -76,6 +76,8 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onLoadingComplete }) => {
               MA
             </div>
           </div>
+          {/* extra rotating ring */}
+          <div className="absolute inset-0 rotate-slower rounded-full border-t-2 border-green-400/30" aria-hidden="true" />
         </div>
 
         {/* Loading Text */}
