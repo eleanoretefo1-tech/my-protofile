@@ -55,6 +55,22 @@
   .animate-float-fast {
     animation: float-soft 3s ease-in-out infinite;
   }
+  .ring-runner {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    border: 3px solid transparent;
+    /* Snake-like moving highlight around the frame */
+    border-image: conic-gradient(
+      from 0deg,
+      rgba(16,185,129,0.95) 0deg 18deg,
+      rgba(59,130,246,0.55) 18deg 48deg,
+      rgba(236,72,153,0.3) 48deg 90deg,
+      rgba(0,0,0,0) 90deg 360deg
+    ) 1;
+    filter: blur(6px);
+    animation: spin-snake 6s linear infinite;
+  }
 }
 
 @keyframes gradient-x {
@@ -111,6 +127,11 @@
 @keyframes caret-blink {
   0%, 49% { opacity: 1; }
   50%, 100% { opacity: 0; }
+}
+
+@keyframes spin-snake {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 /* Custom scrollbar */
