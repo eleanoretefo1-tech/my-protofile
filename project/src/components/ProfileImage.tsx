@@ -2,18 +2,18 @@ import React from 'react';
 
 const ProfileImage: React.FC = () => {
   return (
-    <div className="relative w-48 h-48 md:w-64 md:h-64 animate-float-soft">
+    <div className="relative w-56 h-56 md:w-72 md:h-72 lg:w-80 lg:h-80 animate-float-soft">
       {/* Subtle neon ring with very slow rotation */}
       <div
-        className="absolute -inset-2 rounded-full bg-gradient-to-tr from-green-400/20 via-blue-500/20 to-pink-500/20 blur-md opacity-70 motion-safe:animate-spin-very-slow"
+        className="absolute -inset-4 rounded-full bg-gradient-to-tr from-green-400/35 via-blue-500/30 to-pink-500/35 blur-xl opacity-90 motion-safe:animate-spin-very-slow"
         aria-hidden="true"
       />
 
       {/* Crisp thin gradient border (no shadow) */}
-      <div className="absolute -inset-[3px] rounded-full bg-gradient-to-r from-green-400/25 via-transparent to-pink-500/25" aria-hidden="true" />
+      <div className="absolute -inset-[4px] rounded-full bg-gradient-to-r from-green-400/40 via-transparent to-pink-500/40" aria-hidden="true" />
 
       {/* Image container with subtle lighting overlay */}
-      <div className="relative w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden">
+      <div className="relative w-56 h-56 md:w-72 md:h-72 lg:w-80 lg:h-80 rounded-full overflow-hidden">
         <img
           src="/photo_2025-08-19_02-14-04.jpg"
           width="256"

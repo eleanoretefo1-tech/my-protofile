@@ -27,7 +27,7 @@ function App() {
       <AnimatedBackground />
       
       {/* Main Content: two-column responsive layout */}
-      <div className="relative z-10 min-h-screen px-6 py-12">
+      <div className="relative z-10 min-h-screen px-6 py-12 pt-28 md:pt-32">
         <div className="mx-auto max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left: Text and CTAs */}
           <div className="order-2 lg:order-1 text-center lg:text-left space-y-8">
