@@ -6,9 +6,10 @@ import GradientText from './components/GradientText';
 import NeonButton from './components/NeonButton';
 import ProfileImage from './components/ProfileImage';
 import TypingText from './components/TypingText';
+import LoadingScreen from './components/LoadingScreen';
 
 function App() {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleContactEmail = () => {
     window.location.href = 'mailto:eleanoretefo1@gmail.com';
@@ -17,6 +18,12 @@ function App() {
   const handleWhatsApp = () => {
     window.open('https://wa.me/201227866673', '_blank');
   };
+
+  const handleLoadingComplete = () => setIsLoading(false);
+
+  if (isLoading) {
+    return <LoadingScreen onLoadingComplete={handleLoadingComplete} />;
+  }
 
   return (
     <div className="min-h-screen bg-gray-900 relative overflow-hidden">
