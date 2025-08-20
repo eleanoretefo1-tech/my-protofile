@@ -52,17 +52,30 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onLoadingComplete }) => {
 
       {/* Main Loading Content */}
       <div className="relative text-center space-y-8">
-        {/* MA Logo with Neon Effect */}
-        <div className="relative">
-          <div className="text-8xl md:text-9xl font-bold bg-gradient-to-r from-green-400 via-blue-500 to-pink-500 bg-clip-text text-transparent animate-pulse">
-            MA
-          </div>
-          {/* Animated sweep highlight over MA */}
+        {/* Circular progress ring around MA */}
+        <div className="relative w-44 h-44 md:w-56 md:h-56 mx-auto">
+          <svg className="absolute inset-0 w-full h-full rotate-[-90deg]" viewBox="0 0 100 100" aria-hidden="true">
+            <circle cx="50" cy="50" r="44" stroke="rgba(255,255,255,0.1)" strokeWidth="4" fill="none" />
+            <circle
+              cx="50" cy="50" r="44" fill="none" strokeWidth="5"
+              strokeLinejoin="round" strokeLinecap="round"
+              stroke="url(#grad)"
+              strokeDasharray={`${2 * Math.PI * 44}`}
+              strokeDashoffset={`${(1 - progress / 100) * 2 * Math.PI * 44}`}
+            />
+            <defs>
+              <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#10b981" />
+                <stop offset="50%" stopColor="#3b82f6" />
+                <stop offset="100%" stopColor="#ec4899" />
+              </linearGradient>
+            </defs>
+          </svg>
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-1/3 h-2/3 animate-sweep bg-gradient-to-r from-white/40 via-white/10 to-transparent rounded-full blur-md" />
+            <div className="text-6xl md:text-7xl font-bold bg-gradient-to-r from-green-400 via-blue-500 to-pink-500 bg-clip-text text-transparent neon-flicker">
+              MA
+            </div>
           </div>
-          {/* Pulsing glow effect */}
-          <div className="absolute inset-0 bg-gradient-to-r from-green-400/25 via-blue-500/25 to-pink-500/25 rounded-full blur-3xl animate-breathe" />
         </div>
 
         {/* Loading Text */}

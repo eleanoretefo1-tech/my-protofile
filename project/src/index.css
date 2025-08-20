@@ -56,6 +56,12 @@
   .animate-breathe {
     animation: breathe 3s ease-in-out infinite;
   }
+  .rotate-slow {
+    animation: spin 6s linear infinite;
+  }
+  .neon-flicker {
+    animation: neon-flicker 1.8s ease-in-out infinite alternate;
+  }
   .animate-breathe-fast {
     animation: breathe 1.5s ease-in-out infinite;
   }
@@ -164,6 +170,12 @@
 @keyframes breathe {
   0%, 100% { opacity: 0.35; filter: blur(18px); }
   50% { opacity: 0.75; filter: blur(26px); }
+}
+
+@keyframes neon-flicker {
+  0% { opacity: 0.85; filter: drop-shadow(0 0 6px rgba(16,185,129,0.6)) drop-shadow(0 0 10px rgba(59,130,246,0.5)); }
+  50% { opacity: 1; filter: drop-shadow(0 0 10px rgba(16,185,129,0.8)) drop-shadow(0 0 14px rgba(59,130,246,0.7)); }
+  100% { opacity: 0.9; filter: drop-shadow(0 0 8px rgba(236,72,153,0.6)); }
 }
 
 /* Custom scrollbar */
