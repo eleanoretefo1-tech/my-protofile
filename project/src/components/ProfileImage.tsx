@@ -3,7 +3,11 @@ import React from 'react';
 const ProfileImage: React.FC = () => {
   return (
     <div className="relative">
+      {/* Outer breathing glow around the glass frame */}
+      <div className="absolute -inset-3 rounded-3xl blur-2xl opacity-70 animate-breathe bg-gradient-to-tr from-green-400/50 via-blue-500/40 to-pink-500/50" aria-hidden="true" />
+      {/* Glass backdrop that moves with the frame */}
       <div className="absolute -inset-6 rounded-3xl bg-white/5 backdrop-blur-sm border border-white/10 animate-pulse-glow-strong motion-safe:animate-float-fast" aria-hidden="true" />
+      {/* Gradient frame with animated sweep-like glow and snake ring */}
       <div className="relative rounded-2xl p-[4px] bg-gradient-to-tr from-green-400/70 via-blue-500/60 to-pink-500/70 animate-gradient-x animate-pulse-glow-strong motion-safe:animate-float-fast">
         <div className="relative w-64 h-80 md:w-80 md:h-96 lg:w-96 lg:h-[28rem] rounded-2xl overflow-hidden bg-gray-900/40">
           {/* snake-like glow runner around the frame */}
@@ -21,10 +25,11 @@ const ProfileImage: React.FC = () => {
               target.src = "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=600";
             }}
           />
-          <div className="pointer-events-none absolute inset-0 soft-light-overlay opacity-40" aria-hidden="true" />
+          {/* Ensure image remains clear: disable internal overlays */}
+          <div className="pointer-events-none absolute inset-0 soft-light-overlay opacity-0" aria-hidden="true" />
           {/* Animated gradient glow layer behind content for stronger lighting */}
           <div
-            className="pointer-events-none absolute -inset-8 rounded-3xl blur-2xl opacity-40 animate-gradient-x"
+            className="pointer-events-none absolute -inset-8 rounded-3xl blur-2xl opacity-0 animate-gradient-x"
             style={{
               background: 'linear-gradient(90deg, rgba(16,185,129,0.45), rgba(59,130,246,0.4), rgba(236,72,153,0.45))'
             }}
