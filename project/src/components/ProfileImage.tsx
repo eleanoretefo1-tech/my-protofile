@@ -4,11 +4,11 @@ const ProfileImage: React.FC = () => {
   return (
     <div className="relative">
       {/* Outer breathing glow around the glass frame */}
-      <div className="absolute -inset-3 rounded-3xl blur-2xl opacity-70 animate-breathe bg-gradient-to-tr from-green-400/50 via-blue-500/40 to-pink-500/50" aria-hidden="true" />
+      <div className="absolute -inset-3 rounded-3xl blur-2xl opacity-80 animate-breathe-fast bg-gradient-to-tr from-green-400/60 via-blue-500/50 to-pink-500/60" aria-hidden="true" />
       {/* Glass backdrop that moves with the frame */}
-      <div className="absolute -inset-6 rounded-3xl bg-white/5 backdrop-blur-sm border border-white/10 animate-pulse-glow-strong motion-safe:animate-float-fast" aria-hidden="true" />
+      <div className="absolute -inset-6 rounded-3xl bg-white/5 backdrop-blur-sm border border-white/10 animate-pulse-glow-strong motion-safe:animate-float-faster" aria-hidden="true" />
       {/* Gradient frame with animated sweep-like glow and snake ring */}
-      <div className="relative rounded-2xl p-[4px] bg-gradient-to-tr from-green-400/70 via-blue-500/60 to-pink-500/70 animate-gradient-x animate-pulse-glow-strong motion-safe:animate-float-fast">
+      <div className="relative rounded-2xl p-[5px] bg-gradient-to-tr from-green-400/80 via-blue-500/70 to-pink-500/80 animate-gradient-x animate-pulse-glow-strong motion-safe:animate-float-faster">
         <div className="relative w-64 h-80 md:w-80 md:h-96 lg:w-96 lg:h-[28rem] rounded-2xl overflow-hidden bg-gray-900/40">
           {/* snake-like glow runner around the frame */}
           <div className="ring-runner rounded-2xl" aria-hidden="true" />

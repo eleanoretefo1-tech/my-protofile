@@ -56,12 +56,24 @@
   .animate-breathe {
     animation: breathe 3s ease-in-out infinite;
   }
+  .animate-breathe-fast {
+    animation: breathe 1.5s ease-in-out infinite;
+  }
+  .animate-breathe-fast {
+    animation: breathe 1.5s ease-in-out infinite;
+  }
 
   .animate-float-soft {
     animation: float-soft 6s ease-in-out infinite;
   }
   .animate-float-fast {
     animation: float-soft 3s ease-in-out infinite;
+  }
+  .animate-float-faster {
+    animation: float-soft 1.8s ease-in-out infinite;
+  }
+  .animate-float-faster {
+    animation: float-soft 1.8s ease-in-out infinite;
   }
   .ring-runner {
     position: absolute;
@@ -77,7 +89,7 @@
       rgba(0,0,0,0) 90deg 360deg
     ) 1;
     filter: blur(6px);
-    animation: spin-snake 6s linear infinite;
+    animation: spin-snake 2s linear infinite;
   }
 }
 
