@@ -42,7 +42,7 @@ function App() {
             </div>
             <GradientText className="text-lg md:text-2xl lg:text-3xl font-bold">
               <TypingText
-                text="A Full Stack Developer and Web Solutions Expert with hands-on experience in building responsive websites, modern web applications, and custom business solutions. Skilled in both frontend and backend technologies, delivering high-quality digital products tailored to client needs."
+                text="A Full Stack Developer and Web Solutions Expert with hands-on experience in building responsive websites, modern web applications, and delivering high-quality digital products tailored to client needs."
                 speedMs={20}
               />
             </GradientText>
