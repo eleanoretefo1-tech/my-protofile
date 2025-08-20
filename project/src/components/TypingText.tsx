@@ -26,7 +26,7 @@ const TypingText: React.FC<TypingTextProps> = ({ text, speedMs = 35, className =
   const displayed = text.slice(0, index);
 
   return (
-    <span className={`whitespace-pre-wrap font-semibold tracking-wide text-neon-soft ${className}`} aria-label={text}>
+    <span className={`whitespace-pre-wrap font-semibold tracking-wide ${className}`} aria-label={text}>
       {displayed}
       <span className="typing-caret" aria-hidden="true">|</span>
     </span>
