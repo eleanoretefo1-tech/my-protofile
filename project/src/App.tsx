@@ -41,8 +41,8 @@ function App() {
               </GradientText>
             </div>
             <TypingText
-              text="FULL STACK DEVELOPER & WEB SOLUTIONS EXPERT"
-              speedMs={30}
+              text="A Full Stack Developer and Web Solutions Expert with hands-on experience in building responsive websites, modern web applications, and custom business solutions. Skilled in both frontend and backend technologies, delivering high-quality digital products tailored to client needs."
+              speedMs={25}
               className="text-lg md:text-2xl lg:text-3xl"
             />
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center lg:justify-start items-center pt-2">
