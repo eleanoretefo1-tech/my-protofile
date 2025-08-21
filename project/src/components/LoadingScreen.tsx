@@ -7,7 +7,7 @@ interface LoadingScreenProps {
 const LoadingScreen: React.FC<LoadingScreenProps> = ({ onLoadingComplete }) => {
   const [progress, setProgress] = useState(0);
   const [nameIndex, setNameIndex] = useState(0);
-  const name = 'mohamed atef';
+  const name = 'Mohamed Atef Abdelsattar';
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -82,7 +82,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onLoadingComplete }) => {
 
         {/* Loading Text */}
         <div className="space-y-2">
-          <div className="text-xl md:text-2xl font-medium">
+          <div className="text-2xl md:text-3xl font-semibold tracking-wide">
             <span className="bg-gradient-to-r from-green-400 via-blue-500 to-pink-500 bg-clip-text text-transparent">
               {name.slice(0, nameIndex)}
             </span>
