@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import SmokyCursor from './SmokyCursor';
 
 interface LoadingScreenProps {
   onLoadingComplete: () => void;
@@ -47,21 +48,8 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onLoadingComplete }) => {
 
   return (
     <div className="fixed inset-0 bg-gray-900 flex items-center justify-center z-50">
-      {/* Animated Background Particles */}
-      <div className="absolute inset-0 overflow-hidden grid-overlay">
-        {[...Array(20)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-2 h-2 bg-gradient-to-r from-green-400 to-blue-500 rounded-full animate-ping"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 2}s`,
-              animationDuration: `${2 + Math.random() * 2}s`
-            }}
-          />
-        ))}
-      </div>
+      {/* Smoky cursor animated background */}
+      <SmokyCursor />
 
       {/* Main Loading Content */}
       <div className="relative text-center space-y-8">
