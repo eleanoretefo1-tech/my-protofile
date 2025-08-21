@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import SmokyCursor from './SmokyCursor';
+import ThreeBackground from './ThreeBackground';
 
 interface LoadingScreenProps {
   onLoadingComplete: () => void;
@@ -48,8 +48,8 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onLoadingComplete }) => {
 
   return (
     <div className="fixed inset-0 bg-gray-900 flex items-center justify-center z-50">
-      {/* Smoky cursor animated background */}
-      <SmokyCursor />
+      {/* 3D neon background */}
+      <ThreeBackground />
 
       {/* Main Loading Content */}
       <div className="relative text-center space-y-8">
