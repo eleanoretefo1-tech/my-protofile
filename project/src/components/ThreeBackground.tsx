@@ -81,21 +81,17 @@ const ThreeBackground: React.FC = () => {
 		// Hide the grid in favour of planets
 		gridGroup.visible = false;
 
-		// Sun with glow and light
-		const sun = new THREE.Mesh(
-			new THREE.SphereGeometry(1.1, 64, 64),
-			new THREE.MeshStandardMaterial({ color: 0x331100, emissive: 0xffcc66, emissiveIntensity: 3.0, roughness: 1, metalness: 0 })
-		);
-		sun.position.set(0, 0.8, -9);
-		scene.add(sun);
-		const sunLight = new THREE.PointLight(0xffcc88, 2.2, 180, 1.6);
-		sunLight.position.copy(sun.position);
-		scene.add(sunLight);
+		// Center for planet orbits (no sun mesh)
+		const center = new THREE.Vector3(0, 0.8, -9);
+
+		// Scene lighting (no sun): hemisphere + rim light for pseudo drop-shadows
+		const hemiLight = new THREE.HemisphereLight(0x224466, 0x050810, 0.7);
+		const rimLight = new THREE.DirectionalLight(0x66aaff, 0.6);
+		rimLight.position.set(-6, 4, -4);
+		scene.add(hemiLight, rimLight);
+
+		// Glow texture for halos
 		const glowTex = new THREE.TextureLoader().load('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEUAAAD///+l2Z/dAAAAAXRSTlMAQObYZgAAAA1JREFUCNdjYAAAAAIAAeIhvDMAAAAASUVORK5CYII=');
-		const sunGlow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, color: 0xfff2b3, transparent: true, opacity: 0.6, blending: THREE.AdditiveBlending, depthWrite: false }));
-		sunGlow.scale.set(10, 10, 1);
-		sunGlow.position.copy(sun.position);
-		scene.add(sunGlow);
 
 		// Planets configuration (7 planets)
 		const planetConfigs = [
@@ -113,7 +109,7 @@ const ThreeBackground: React.FC = () => {
 		const ringMeshes: THREE.Mesh[] = [];
 		planetConfigs.forEach((cfg) => {
 			const pivot = new THREE.Group();
-			pivot.position.copy(sun.position);
+			pivot.position.copy(center);
 			scene.add(pivot);
 			const mat = new THREE.MeshStandardMaterial({ color: cfg.color, emissive: cfg.emissive, emissiveIntensity: cfg.eInt, roughness: 0.85, metalness: 0.08 });
 			const mesh = new THREE.Mesh(new THREE.SphereGeometry(cfg.radius, 48, 48), mat);
