@@ -10,27 +10,34 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onLoadingComplete }) => {
   const name = 'Mohamed Atef Abdelsattar';
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setProgress(prev => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          setTimeout(() => onLoadingComplete(), 500);
-          return 100;
-        }
-        return prev + 2;
-      });
-    }, 50);
+    let rafId: number;
+    let startTs: number | null = null;
 
-    return () => clearInterval(interval);
+    const durationMs = 2600; // total loading duration
+
+    const tick = (ts: number) => {
+      if (startTs === null) startTs = ts;
+      const elapsed = ts - startTs;
+      const pct = Math.min(100, Math.round((elapsed / durationMs) * 100));
+      setProgress(pct);
+      if (pct < 100) {
+        rafId = requestAnimationFrame(tick);
+      } else {
+        setTimeout(() => onLoadingComplete(), 500);
+      }
+    };
+
+    rafId = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafId);
   }, [onLoadingComplete]);
 
   useEffect(() => {
-    if (progress >= 100) return;
-    const typing = setInterval(() => {
-      setNameIndex(prev => (prev < name.length ? prev + 1 : prev));
+    if (nameIndex >= name.length) return;
+    const timer = setTimeout(() => {
+      setNameIndex(prev => prev + 1);
     }, 60);
-    return () => clearInterval(typing);
-  }, [progress]);
+    return () => clearTimeout(timer);
+  }, [nameIndex]);
 
   return (
     <div className="fixed inset-0 bg-gray-900 flex items-center justify-center z-50">
