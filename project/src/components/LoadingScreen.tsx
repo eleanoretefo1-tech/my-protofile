@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ThreeBackground from './ThreeBackground';
+import Logo3D from './Logo3D';
 
 interface LoadingScreenProps {
   onLoadingComplete: () => void;
@@ -73,9 +74,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onLoadingComplete }) => {
             </defs>
           </svg>
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-6xl md:text-7xl font-bold bg-gradient-to-r from-green-400 via-blue-500 to-pink-500 bg-clip-text text-transparent neon-flicker">
-              MA
-            </div>
+            <Logo3D />
           </div>
           {/* extra rotating ring */}
           <div className="absolute inset-0 rotate-slower rounded-full border-t-2 border-green-400/30" aria-hidden="true" />
