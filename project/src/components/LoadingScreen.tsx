@@ -7,30 +7,43 @@ interface LoadingScreenProps {
 const LoadingScreen: React.FC<LoadingScreenProps> = ({ onLoadingComplete }) => {
   const [progress, setProgress] = useState(0);
   const [nameIndex, setNameIndex] = useState(0);
-  const name = 'mohamed atef';
+  const name = 'Mohamed Atef Abdelsattar';
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setProgress(prev => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          setTimeout(() => onLoadingComplete(), 500);
-          return 100;
-        }
-        return prev + 2;
-      });
-    }, 50);
+    let rafId: number;
+    let startTs: number | null = null;
 
-    return () => clearInterval(interval);
-  }, [onLoadingComplete]);
+    const durationMs = 2600;
+
+    const tick = (ts: number) => {
+      if (startTs === null) startTs = ts;
+      const elapsed = ts - startTs;
+      const pct = Math.min(100, Math.round((elapsed / durationMs) * 100));
+      setProgress(pct);
+      if (pct < 100) {
+        rafId = requestAnimationFrame(tick);
+      }
+    };
+
+    rafId = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafId);
+  }, []);
+
+  // Only complete after both the progress reaches 100 and the name has fully typed
+  useEffect(() => {
+    if (progress >= 100 && nameIndex >= name.length) {
+      const t = setTimeout(() => onLoadingComplete(), 400);
+      return () => clearTimeout(t);
+    }
+  }, [progress, nameIndex, name.length, onLoadingComplete]);
 
   useEffect(() => {
-    if (progress >= 100) return;
-    const typing = setInterval(() => {
-      setNameIndex(prev => (prev < name.length ? prev + 1 : prev));
-    }, 60);
-    return () => clearInterval(typing);
-  }, [progress]);
+    if (nameIndex >= name.length) return;
+    const timer = setTimeout(() => {
+      setNameIndex(prev => prev + 1);
+    }, 70);
+    return () => clearTimeout(timer);
+  }, [nameIndex, name.length]);
 
   return (
     <div className="fixed inset-0 bg-gray-900 flex items-center justify-center z-50">
@@ -82,7 +95,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onLoadingComplete }) => {
 
         {/* Loading Text */}
         <div className="space-y-2">
-          <div className="text-xl md:text-2xl font-medium">
+          <div className="text-2xl md:text-3xl font-semibold tracking-wide min-h-[2.25rem] md:min-h-[2.75rem]">
             <span className="bg-gradient-to-r from-green-400 via-blue-500 to-pink-500 bg-clip-text text-transparent">
               {name.slice(0, nameIndex)}
             </span>
