@@ -13,7 +13,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onLoadingComplete }) => {
     let rafId: number;
     let startTs: number | null = null;
 
-    const durationMs = 2600; // total loading duration
+    const durationMs = 2600;
 
     const tick = (ts: number) => {
       if (startTs === null) startTs = ts;
@@ -22,22 +22,28 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onLoadingComplete }) => {
       setProgress(pct);
       if (pct < 100) {
         rafId = requestAnimationFrame(tick);
-      } else {
-        setTimeout(() => onLoadingComplete(), 500);
       }
     };
 
     rafId = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(rafId);
-  }, [onLoadingComplete]);
+  }, []);
+
+  // Only complete after both the progress reaches 100 and the name has fully typed
+  useEffect(() => {
+    if (progress >= 100 && nameIndex >= name.length) {
+      const t = setTimeout(() => onLoadingComplete(), 400);
+      return () => clearTimeout(t);
+    }
+  }, [progress, nameIndex, name.length, onLoadingComplete]);
 
   useEffect(() => {
     if (nameIndex >= name.length) return;
     const timer = setTimeout(() => {
       setNameIndex(prev => prev + 1);
-    }, 60);
+    }, 70);
     return () => clearTimeout(timer);
-  }, [nameIndex]);
+  }, [nameIndex, name.length]);
 
   return (
     <div className="fixed inset-0 bg-gray-900 flex items-center justify-center z-50">
@@ -89,7 +95,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onLoadingComplete }) => {
 
         {/* Loading Text */}
         <div className="space-y-2">
-          <div className="text-2xl md:text-3xl font-semibold tracking-wide">
+          <div className="text-2xl md:text-3xl font-semibold tracking-wide min-h-[2.25rem] md:min-h-[2.75rem]">
             <span className="bg-gradient-to-r from-green-400 via-blue-500 to-pink-500 bg-clip-text text-transparent">
               {name.slice(0, nameIndex)}
             </span>
