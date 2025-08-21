@@ -18,14 +18,20 @@ const ThreeBackground: React.FC = () => {
 		const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 		renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 		renderer.setSize(container.clientWidth, container.clientHeight);
-		renderer.setClearColor(0x000000, 0);
+		renderer.setClearColor(0x000000, 0); // transparent
 		container.appendChild(renderer.domElement);
 
-		// Hidden neon grid (kept for future use)
+		// Neon gradient grid (curved lines)
 		const gridGroup = new THREE.Group();
 		scene.add(gridGroup);
-		const gridMaterial = new THREE.LineBasicMaterial({ color: 0x00ffa6, transparent: true, opacity: 0.0 });
-		const gridMaterial2 = new THREE.LineBasicMaterial({ color: 0x4ea3ff, transparent: true, opacity: 0.0 });
+
+		const gridMaterial = new THREE.LineBasicMaterial({
+			color: 0x00ffa6,
+			transparent: true,
+			opacity: 0.55,
+		});
+		const gridMaterial2 = new THREE.LineBasicMaterial({ color: 0x4ea3ff, transparent: true, opacity: 0.4 });
+
 		const createCurve = (z: number, colorAlt = false) => {
 			const points: THREE.Vector3[] = [];
 			for (let x = -20; x <= 20; x += 0.5) {
@@ -37,8 +43,11 @@ const ThreeBackground: React.FC = () => {
 			gridGroup.add(line);
 			return line;
 		};
-		for (let i = 0; i < 40; i++) createCurve(-i * 0.6, i % 2 === 0);
-		gridGroup.visible = false;
+
+		const lines: THREE.Line[] = [];
+		for (let i = 0; i < 40; i++) {
+			lines.push(createCurve(-i * 0.6, i % 2 === 0));
+		}
 
 		// Starfield / particles
 		const particlesGeo = new THREE.BufferGeometry();
@@ -60,7 +69,7 @@ const ThreeBackground: React.FC = () => {
 		const particles = new THREE.Points(particlesGeo, particlesMat);
 		scene.add(particles);
 
-		// Glow plane beneath
+		// Neon foggy glow plane beneath
 		const planeGeo = new THREE.PlaneGeometry(60, 60, 1, 1);
 		const planeMat = new THREE.MeshBasicMaterial({ color: 0x0b1220, transparent: true, opacity: 0.25 });
 		const plane = new THREE.Mesh(planeGeo, planeMat);
@@ -68,71 +77,73 @@ const ThreeBackground: React.FC = () => {
 		plane.position.y = -2.2;
 		scene.add(plane);
 
-		// Lights for planets
-		const ambient = new THREE.AmbientLight(0x446677, 0.7);
-		const keyLight = new THREE.PointLight(0x88ccff, 1.4, 120);
-		keyLight.position.set(4, 6, 6);
-		const rimLight = new THREE.DirectionalLight(0xff66cc, 0.6);
-		rimLight.position.set(-6, 4, -4);
-		scene.add(ambient, keyLight, rimLight);
+		// ---- Solar System ----
+		// Hide the grid in favour of planets
+		gridGroup.visible = false;
 
-		// Ring texture via canvas
-		const createRingTexture = () => {
-			const size = 256;
-			const cvs = document.createElement('canvas');
-			cvs.width = size; cvs.height = size;
-			const ctx = cvs.getContext('2d');
-			if (!ctx) return null as unknown as THREE.Texture;
-			const grad = ctx.createRadialGradient(size/2, size/2, size*0.35, size/2, size/2, size*0.5);
-			grad.addColorStop(0.0, 'rgba(255,255,255,0)');
-			grad.addColorStop(0.55, 'rgba(0,0,0,0)');
-			grad.addColorStop(0.72, 'rgba(140,210,255,0.55)');
-			grad.addColorStop(1.0, 'rgba(255,95,218,0)');
-			ctx.fillStyle = grad;
-			ctx.fillRect(0,0,size,size);
-			const tex = new THREE.CanvasTexture(cvs);
-			tex.needsUpdate = true;
-			return tex;
-		};
-
-		// Planets and moon
-		const planetsGroup = new THREE.Group();
-		scene.add(planetsGroup);
-
-		const mainPlanet = new THREE.Mesh(
-			new THREE.SphereGeometry(1.6, 64, 64),
-			new THREE.MeshStandardMaterial({ color: 0x2ab3a6, roughness: 0.85, metalness: 0.08, emissive: 0x082a2a, emissiveIntensity: 0.2 })
+		// Sun with glow and light
+		const sun = new THREE.Mesh(
+			new THREE.SphereGeometry(1.1, 64, 64),
+			new THREE.MeshStandardMaterial({ color: 0x331100, emissive: 0xffcc66, emissiveIntensity: 3.0, roughness: 1, metalness: 0 })
 		);
-		mainPlanet.position.set(-1.4, 0.8, -8);
-		planetsGroup.add(mainPlanet);
+		sun.position.set(0, 0.8, -9);
+		scene.add(sun);
+		const sunLight = new THREE.PointLight(0xffcc88, 2.2, 180, 1.6);
+		sunLight.position.copy(sun.position);
+		scene.add(sunLight);
+		const glowTex = new THREE.TextureLoader().load('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEUAAAD///+l2Z/dAAAAAXRSTlMAQObYZgAAAA1JREFUCNdjYAAAAAIAAeIhvDMAAAAASUVORK5CYII=');
+		const sunGlow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, color: 0xfff2b3, transparent: true, opacity: 0.6, blending: THREE.AdditiveBlending, depthWrite: false }));
+		sunGlow.scale.set(10, 10, 1);
+		sunGlow.position.copy(sun.position);
+		scene.add(sunGlow);
 
-		const moonPivot = new THREE.Group();
-		moonPivot.position.copy(mainPlanet.position);
-		const moon = new THREE.Mesh(
-			new THREE.SphereGeometry(0.45, 48, 48),
-			new THREE.MeshStandardMaterial({ color: 0x9aa9ff, roughness: 0.9, metalness: 0.05, emissive: 0x0a0e2a, emissiveIntensity: 0.15 })
-		);
-		moon.position.set(2.2, 0.2, 0);
-		moonPivot.add(moon);
-		scene.add(moonPivot);
+		// Planets configuration (7 planets)
+		const planetConfigs = [
+			{ name: 'Mercury', radius: 0.18, distance: 2.0, color: 0x9e8e7e, emissive: 0x332a22, eInt: 0.15, orbit: 0.022, rot: 0.01 },
+			{ name: 'Venus', radius: 0.28, distance: 2.8, color: 0xd4b27a, emissive: 0x2a1e12, eInt: 0.18, orbit: 0.018, rot: 0.008 },
+			{ name: 'Earth', radius: 0.3, distance: 3.6, color: 0x3aa7ff, emissive: 0x0a1a2a, eInt: 0.2, orbit: 0.016, rot: 0.02 },
+			{ name: 'Mars', radius: 0.24, distance: 4.3, color: 0xdf6b4a, emissive: 0x2a0e08, eInt: 0.18, orbit: 0.013, rot: 0.018 },
+			{ name: 'Jupiter', radius: 0.7, distance: 5.4, color: 0xd9b38c, emissive: 0x2a1c12, eInt: 0.16, orbit: 0.009, rot: 0.03 },
+			{ name: 'Saturn', radius: 0.6, distance: 6.6, color: 0xc8b48a, emissive: 0x231a10, eInt: 0.16, orbit: 0.007, rot: 0.028, ring: { inner: 0.8, outer: 1.3, tilt: 0.35 } },
+			{ name: 'Uranus', radius: 0.5, distance: 7.8, color: 0x8fd8ff, emissive: 0x0a1a22, eInt: 0.18, orbit: 0.006, rot: 0.024 }
+		] as const;
 
-		const ringedPlanet = new THREE.Mesh(
-			new THREE.SphereGeometry(1.2, 64, 64),
-			new THREE.MeshStandardMaterial({ color: 0x6ab0ff, roughness: 0.8, metalness: 0.1, emissive: 0x081a2a, emissiveIntensity: 0.18 })
-		);
-		ringedPlanet.position.set(2.4, 1.0, -10);
-		planetsGroup.add(ringedPlanet);
-		const ringTex = createRingTexture();
-		const ringMesh = new THREE.Mesh(
-			new THREE.RingGeometry(1.6, 2.6, 128),
-			new THREE.MeshBasicMaterial({ map: ringTex ?? undefined, color: 0xffffff, transparent: true, opacity: 0.8, side: THREE.DoubleSide, depthWrite: false, blending: THREE.AdditiveBlending })
-		);
-		ringMesh.position.copy(ringedPlanet.position);
-		ringMesh.rotation.x = Math.PI / 2 - 0.35;
-		ringMesh.rotation.y = 0.35;
-		scene.add(ringMesh);
+		const pivots: THREE.Group[] = [];
+		const planetMeshes: THREE.Mesh[] = [];
+		const ringMeshes: THREE.Mesh[] = [];
+		planetConfigs.forEach((cfg) => {
+			const pivot = new THREE.Group();
+			pivot.position.copy(sun.position);
+			scene.add(pivot);
+			const mat = new THREE.MeshStandardMaterial({ color: cfg.color, emissive: cfg.emissive, emissiveIntensity: cfg.eInt, roughness: 0.85, metalness: 0.08 });
+			const mesh = new THREE.Mesh(new THREE.SphereGeometry(cfg.radius, 48, 48), mat);
+			mesh.position.set(cfg.distance, 0, 0);
+			pivot.add(mesh);
+			pivots.push(pivot);
+			planetMeshes.push(mesh);
+			// Small halo per planet
+			const halo = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, color: 0xffffff, transparent: true, opacity: 0.18, blending: THREE.AdditiveBlending, depthWrite: false }));
+			halo.scale.set(cfg.radius * 6, cfg.radius * 6, 1);
+			halo.position.set(cfg.distance, 0, 0);
+			pivot.add(halo);
+			// Rings for Saturn
+			// @ts-ignore
+			if ((cfg as any).ring) {
+				// @ts-ignore
+				const r = (cfg as any).ring;
+				const ring = new THREE.Mesh(
+					new THREE.RingGeometry(r.inner, r.outer, 96),
+					new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.6, side: THREE.DoubleSide, depthWrite: false, blending: THREE.AdditiveBlending })
+				);
+				ring.position.set(cfg.distance, 0, 0);
+				ring.rotation.x = Math.PI / 2 - r.tilt;
+				ring.rotation.y = r.tilt * 0.6;
+				pivot.add(ring);
+				ringMeshes.push(ring);
+			}
+		});
 
-		// Animation loop
+		// Animation
 		let t = 0;
 		const animate = () => {
 			t += 0.01;
@@ -144,12 +155,12 @@ const ThreeBackground: React.FC = () => {
 			}
 			particles.geometry.attributes.position.needsUpdate = true;
 
-			// Planet rotations and orbits
-			mainPlanet.rotation.y += 0.003;
-			moon.rotation.y += 0.006;
-			moonPivot.rotation.y += 0.01;
-			ringedPlanet.rotation.y += 0.0025;
-			ringMesh.rotation.z += 0.0008;
+			// Orbits and rotations
+			for (let i = 0; i < planetConfigs.length; i++) {
+				pivots[i].rotation.y += (planetConfigs as any)[i].orbit;
+				planetMeshes[i].rotation.y += (planetConfigs as any)[i].rot;
+			}
+			ringMeshes.forEach((rm) => (rm.rotation.z += 0.0008));
 
 			renderer.render(scene, camera);
 			rafRef.current = requestAnimationFrame(animate);
